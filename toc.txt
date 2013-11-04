@@ -13,4 +13,4 @@ specially-formatted comments embedded in the Drupal Core files themselves.)
 
 // List individual section document files here. Try to keep them in either
 // logical or alphabetical order.
-include::config.txt
+include::config.txt[]
