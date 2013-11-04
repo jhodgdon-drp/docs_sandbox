@@ -1,0 +1,16 @@
+= The Drupal API
+
+== Introduction
+
+This book provides information for Drupal developers on the Drupal API, and is
+meant to act as a companion to the detailed class and function reference
+information that you can find on https://api.drupal.org (the official Drupal API
+reference site). The information here is of a tutorial and descriptive nature,
+and is built from http://asciidoc.org[AsciiDoc] source files that you can find
+in the "Core Docs" project on Drupal.org. (In contrast, the function/class
+reference information on https://api.drupal.org is built from
+specially-formatted comments embedded in the Drupal Core files themselves.)
+
+// List individual section document files here. Try to keep them in either
+// logical or alphabetical order.
+include::config.txt
