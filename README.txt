@@ -16,6 +16,6 @@ MAKING A PDF
 To compile the documentation book into a PDF file, if you have the AsciiDoc tool
 chain installed (see the AsciiDoc Display project for how to do that):
 
-a2x -f pdf drupalbook.txt
+a2x -d book -f pdf drupalbook.txt
 
 This will result in a drupalbook.pdf file containing the entire book.
