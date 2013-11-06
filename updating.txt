@@ -1,0 +1,128 @@
+[[updating_7_8]]
+== Updating to Drupal 8
+
+This section contains topics about updating modules from Drupal 7 and other
+previous versions to Drupal 8.
+
+[[state_updates_7_8]]
+=== Updating Drupal 7 Variables to Drupal 8 State System
+
+Here is a guide for how to update Drupal 7 variables to the State system. Note
+that some variables should be updated to the configuration instead -- see
+<<config_info_types>> for more information.
+
+Here are the steps to follow:
+
+. Within your conversion issue work, convert one variable at a time.
+  - Determine the variable name to convert.
+  - Grep the entire Drupal code base for the variable name and identify all
+  instances that need to be updated.
+
+. Keep state identifiers short and concise. Generally these can probably stay
+    the same as they were in Drupal 7, unless the old name was incorrect or
+    confusing in some way.
+. The state system is initialized by calling the Drupal::state()
+    function. Interact with the state system using the get(), set() and delete()
+    functions. The Drupal::state() function returns a state object, so you can
+    do:
+[source,php]
+----
+$data = Drupal::state()->get('my_state_data');
+----
+
+[start=4]
+. When retrieving data, the state system does not provide a way to provide a
+    default the way the old variable system did. However, you can provide a
+    default when it returns FALSE, indicating that there is no data. A concise
+    way to do this is:
+[source,php]
+----
+$state = Drupal::state()->get('my_state') ?: 'Nothing there';
+----
+    Note: If the boolean value of FALSE or the integer 0 are valid data for your
+    state variable, then this will require special handling.
+
+[start=5]
+. Here is a simple example of converting variables to state:
+[source,php]
+----
+//  Drupal 7
+variable_set('my_data', 'foo');
+$data = variable_get('my_data', 'bar');
+variable_del('my_data');
+
+// Drupal 8
+Drupal::state()->set('my_data', 'foo');
+$data = Drupal::state()->get('my_data') ?: 'bar';
+Drupal::state()->delete('my_data');
+----
+
+[start=6]
+. The variable name should be changed so that we can identify the module that
+  creates it. The key should use the same namespace strategy as the
+  configuration system. So for example:
+  - cron_last becomes system.cron_last
+  - node_cron_last becomes node.cron_last
+  - menu_masks becomes menu.masks
+. The upgrade path needs to be determined. If the value needs to be maintained
+  through the Drupal 7 to 8 upgrade it should be migrated. For example:
+[source,php]
+----
+/**
+ * Migrates install_task and install_time variables to State API.
+ *
+ * @ingroup state_upgrade
+ */
+function system_update_8022() {
+  update_variables_to_state(array(
+    'install_task' => 'system.install_task',
+    'install_time' => 'system.install_time',
+  ));
+}
+----
+
+  However if the value will be recreated through cache clears or naturally
+  through the upgrade then the Drupal 7 variable should be deleted. For example:
+
+[source,php]
+----
+/**
+ * Delete drupal_js_cache_files variable.
+ *
+ * @ingroup state_upgrade
+ */
+function system_update_8023() {
+  update_variable_del('drupal_js_cache_files');
+}
+----
+
+[start=8]
+. Delete states on uninstall, as in _/core/modules/comment/comment.install_
+[source,php]
+----
+function comment_uninstall() {
+  ...
+  // Remove states.
+  Drupal::state()->delete('comment.node_comment_statistics_scale');
+}
+----
+
+[start=9]
+. Add test coverage to the upgrade tests, as in
+    _/core/modules/system/tests/upgrade/drupal-7.state.system.database.php_:
+[source,php]
+----
+db_merge('variable')
+  ->key(array('name' => 'node_cron_comments_scale'))
+  ->fields(array('value' => serialize(1.0 / 1000)))
+   ->execute();
+----
+Check if new values apply, as in
+_/core/modules/system/lib/Drupal/system/Tests/Upgrade/StateSystemUpgradePathTest.php_:
+[source,php]
+----
+$expected_state['comment.count_scale'] = array(
+  'value' => 1.0 / 1000,
+  'variable_name' => 'node_cron_comments_scale',
+);
+----

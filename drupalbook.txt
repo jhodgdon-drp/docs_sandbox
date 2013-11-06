@@ -1,4 +1,4 @@
-= The Drupal API
+= The Drupal 8 API
 
 == Introduction
 
@@ -14,3 +14,5 @@ specially-formatted comments embedded in the Drupal Core files themselves.)
 // List individual section document files here. Try to keep them in either
 // logical or alphabetical order.
 include::config.txt[]
+include::state.txt[]
+include::updating.txt[]

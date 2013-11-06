@@ -1,0 +1,32 @@
+[[state_api]]
+== State API
+
+The State API provides a place for developers to store information about the
+system's state. A good example of state is the last time cron was run. This is
+specific to an environment and has no use in deployment.  See
+<<config_info_types>> for a more complete discussion of how state information
+differs from configuration information.
+
+The State API is a simple system to store this information. Typical usage:
+
+[source,php]
+----
+// Get a value:
+$val = Drupal::state()->get('key');
+// Get multiple key/value pairs:
+$pairs = Drupal::state()->getMultiple($keys);
+// Get all key/value pairs:
+$collection = Drupal::state()->getAll();
+// Set a value:
+Drupal::state()->set('key','value');
+// Set multiple values:
+Drupal::state()->setMultiple($keyvalues);
+// Set a value if not already set:
+Drupal::state()->setIfNotExists('key','value');
+// Delete a value:
+Drupal::state()->delete('key');
+----
+
+See also:
+
+- <<state_updates_7_8>>
