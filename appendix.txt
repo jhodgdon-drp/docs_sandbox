@@ -1,0 +1,94 @@
+[[appendix]]
+== Appendix: Style Guide Etc.
+
+[[style-guide]]
+=== Formatting and Style Guide
+
+The documentation in this project is formatted using
+http://asciidoc.org[AsciiDoc], which is a fairly simple markdown-style
+syntax. The
+http://asciidoc.org/userguide.html[AsciiDoc user guide] explains the markup
+syntax in detail. Or, you can use this handy
+http://powerman.name/doc/asciidoc[AsciiDoc Cheat Sheet].
+
+A few notes on syntax that are specific to Drupal Core documentation follow.
+
+[[style-sections]]
+==== Chapters and Sections
+
+AsciiDoc supports a couple of different syntax options for chapters and
+sections; we're using an alternative that is not covered in all AsciiDoc
+documentation, but is simpler to use.
+
+Also, every section and chapter should have an identifier on it.
+
+So, it looks like this:
+
+----
+ = Overall Book Title
+
+ [[first_chapter_id]]
+ == Chapter Title One
+
+ [[first_section_id]]
+ === Section Title Sub 1
+----
+
+You can then make a link to a different chapter or section by putting
+
+----
+ <<the_id>>
+----
+
+into your text.
+
+Each chapter should be in a separate file; sections can be in the same file or
+separate files. Chapters are things like "Configuration API" and sections
+roughly correspond to drupal.org book pages within each chapter. On
+api.drupal.org, each section will be displayed on its own page.
+
+[[style-code]]
+==== Code
+
+To include PHP code, prefix a literal block (which starts with +----+ on its own
+line) with +[source,php]+. Other types of source code are also recognized, such
+as +css+, +javascript+, +sql+, +html+, etc. For generic source code, you can
+omit the +[source,php]+ line. There are examples in most of the files.
+
+[[style-versions]]
+==== Drupal Versions
+
+This repository will be branched for new versions of Drupal. So, do not
+specifically use the version number in your writing, except in the top-level
+title, and in specific sections about updating from one version to another. The
+hope is that when we branch to the next version, we should just be able to
+delete the version-specific updating sections, change the main title in one
+place, and be done.
+
+[[style-literals]]
+==== Literals and Text Formatting
+
+File names and directories in text should be formatted in italics:
+
+----
+_core/modules/system/system.module_
+----
+
+Functions, variables, class names, snippets, etc. in text should be formatted
+in monospace:
+
+----
++my_function_name()+
++$foo+
+----
+
+[[style-comments]]
+==== Comments
+
+You can put comments about formatting into your AsciiDoc using double slashes,
+like PHP:
+
+----
+// This is a comment that is only relevant to someone reading
+// the AsciiDoc source.
+----
