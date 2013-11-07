@@ -25,6 +25,7 @@ Here are the steps to follow:
     function. Interact with the state system using the get(), set() and delete()
     functions. The Drupal::state() function returns a state object, so you can
     do:
+
 [source,php]
 ----
 $data = Drupal::state()->get('my_state_data');
@@ -35,15 +36,18 @@ $data = Drupal::state()->get('my_state_data');
     default the way the old variable system did. However, you can provide a
     default when it returns FALSE, indicating that there is no data. A concise
     way to do this is:
+
 [source,php]
 ----
 $state = Drupal::state()->get('my_state') ?: 'Nothing there';
 ----
-    Note: If the boolean value of FALSE or the integer 0 are valid data for your
-    state variable, then this will require special handling.
+
+Note: If the boolean value of FALSE or the integer 0 are valid data for your
+state variable, then this will require special handling.
 
 [start=5]
 . Here is a simple example of converting variables to state:
+
 [source,php]
 ----
 //  Drupal 7
@@ -66,6 +70,7 @@ Drupal::state()->delete('my_data');
   - menu_masks becomes menu.masks
 . The upgrade path needs to be determined. If the value needs to be maintained
   through the Drupal 7 to 8 upgrade it should be migrated. For example:
+
 [source,php]
 ----
 /**
@@ -81,8 +86,8 @@ function system_update_8022() {
 }
 ----
 
-  However if the value will be recreated through cache clears or naturally
-  through the upgrade then the Drupal 7 variable should be deleted. For example:
+However if the value will be recreated through cache clears or naturally
+through the upgrade then the Drupal 7 variable should be deleted. For example:
 
 [source,php]
 ----
@@ -98,6 +103,7 @@ function system_update_8023() {
 
 [start=8]
 . Delete states on uninstall, as in _/core/modules/comment/comment.install_
+
 [source,php]
 ----
 function comment_uninstall() {
@@ -110,6 +116,7 @@ function comment_uninstall() {
 [start=9]
 . Add test coverage to the upgrade tests, as in
     _/core/modules/system/tests/upgrade/drupal-7.state.system.database.php_:
+
 [source,php]
 ----
 db_merge('variable')
@@ -119,6 +126,7 @@ db_merge('variable')
 ----
 Check if new values apply, as in
 _/core/modules/system/lib/Drupal/system/Tests/Upgrade/StateSystemUpgradePathTest.php_:
+
 [source,php]
 ----
 $expected_state['comment.count_scale'] = array(
