@@ -60,7 +60,8 @@ omit the +[source,php]+ line. There are examples in most of the files.
 
 This repository will be branched for new versions of Drupal. So, do not
 specifically use the version number in your writing, except in the top-level
-title, and in specific sections about updating from one version to another. The
+book title, and in specific sections about updating from one version to
+another. The
 hope is that when we branch to the next version, we should just be able to
 delete the version-specific updating sections, change the main title in one
 place, and be done.
