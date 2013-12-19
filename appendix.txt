@@ -13,8 +13,6 @@ http://powerman.name/doc/asciidoc[AsciiDoc Cheat Sheet].
 
 A few notes on syntax that are specific to Drupal Core documentation follow.
 
-Oh hai from beejeebus.
-
 [[style-sections]]
 ==== Chapters and Sections
 
@@ -28,8 +26,6 @@ So, it looks like this:
 
 ----
  = Overall Book Title
- 
- another test 
 
  [[first_chapter_id]]
  == Chapter Title One
