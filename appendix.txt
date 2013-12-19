@@ -13,6 +13,8 @@ http://powerman.name/doc/asciidoc[AsciiDoc Cheat Sheet].
 
 A few notes on syntax that are specific to Drupal Core documentation follow.
 
+Oh hai from beejeebus.
+
 [[style-sections]]
 ==== Chapters and Sections
 
